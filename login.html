@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ITRI-機台資料庫系統</title>
+    <link rel="icon" type="image/png" href="./assets/images/ITRI_MiniLogo.png" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <!-- Login Page -->
+    <div id="login-page" class="auth-container active">
+      <h2>機台資料庫系統</h2>
+      <div class="form-group">
+        <div class="input-group">
+          <label for="username" class="input-label">帳號</label>
+          <input type="text" id="username" class="form-input" />
+        </div>
+        <div class="input-group">
+          <label for="password" class="input-label">密碼</label>
+          <input type="password" id="password" class="form-input" />
+        </div>
+        <button class="btn btn-login" onclick="validateLogin()">登入</button>
+        <button
+          class="btn btn-signup toggle-view"
+          data-close="login-page"
+          data-open="signup-page"
+        >
+          註冊
+        </button>
+      </div>
+      <div class="additional-links">
+        <div
+          class="toggle-view"
+          data-close="login-page"
+          data-open="forgot-password-page"
+        >
+          忘記密碼
+        </div>
+      </div>
+    </div>
+
+    <!-- Signup Page -->
+    <div id="signup-page" class="auth-container hidden">
+      <div class="close-button">
+        <div
+          class="toggle-view"
+          data-close="signup-page"
+          data-open="login-page"
+        >
+          <i class="fa fa-close" aria-hidden="true"></i>
+        </div>
+      </div>
+      <h2>註冊帳號</h2>
+      <div class="form-group">
+        <div class="input-group">
+          <label for="signup-username" class="input-label">帳號</label>
+          <input type="text" id="signup-username" class="form-input" />
+        </div>
+        <div class="input-group">
+          <label for="signup-password" class="input-label">密碼</label>
+          <input type="password" id="signup-password" class="form-input" />
+        </div>
+        <div class="input-group">
+          <label for="signup-password-confirm" class="input-label"
+            >確認密碼</label
+          >
+          <input
+            type="password"
+            id="signup-password-confirm"
+            class="form-input"
+          />
+        </div>
+        <div class="input-group">
+          <label for="signup-email" class="input-label">Email</label>
+          <input type="email" id="signup-email" class="form-input" />
+        </div>
+        <button class="btn btn-signup">註冊</button>
+      </div>
+    </div>
+
+    <!-- Forgot Password Page -->
+    <div id="forgot-password-page" class="auth-container hidden">
+      <div class="close-button">
+        <div
+          class="toggle-view"
+          data-close="forgot-password-page"
+          data-open="login-page"
+        >
+          <i class="fa fa-close" aria-hidden="true"></i>
+        </div>
+      </div>
+      <h2>重置密碼</h2>
+      <div class="form-group">
+        <div class="input-group">
+          <label for="forgot-email" class="input-label">E-mail</label>
+          <input type="email" id="forgot-email" class="form-input" />
+        </div>
+        <button class="btn btn-reset-password">傳送重置連結</button>
+      </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+      "use strict";
+      $(document).ready(function () {
+        // Handle focus and filled states for input fields
+        $(".form-input")
+          .focus(function () {
+            $(this).prev().addClass("is-focused");
+          })
+          .blur(function () {
+            if (!$(this).val()) {
+              $(this).prev().removeClass("is-focused is-filled");
+            }
+          })
+          .keyup(function () {
+            if ($(this).val()) {
+              $(this).prev().addClass("is-filled");
+            } else {
+              $(this).prev().removeClass("is-filled");
+            }
+          });
+
+        // Handle view transitions on button clicks
+        $(".toggle-view").click(function () {
+          var open = $(this).data("open");
+          var close = $(this).data("close");
+          $("#" + close).animate(
+            {
+              opacity: 0,
+              top: "+=100",
+            },
+            500,
+            function () {
+              $(this)
+                .removeClass("active")
+                .addClass("hidden")
+                .removeAttr("style");
+              $("#" + open)
+                .removeClass("hidden")
+                .addClass("active");
+            }
+          );
+        });
+      });
+
+      // Function to validate login
+      function validateLogin() {
+        var username = $("#username").val();
+        var password = $("#password").val();
+
+        if (username === "D100" && password === "D100") {
+          // Redirect if validation passes
+          window.location.href = "MachineManagement.html";
+        } else {
+          alert("輸入帳號、密碼錯誤，請再嘗試一次。");
+        }
+      }
+    </script>
+    <style>
+      /* General Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+        color: #666666;
+      }
+
+      body {
+        background: url("assets/images/loginBackground.jpg") no-repeat center
+          center fixed;
+        background-size: cover;
+        overflow: hidden;
+      }
+
+      /* Container Styles */
+      .auth-container {
+        max-width: 400px;
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 4px 4px 5px rgba(0, 0, 0, 0.5);
+        margin: 50px auto;
+        padding: 30px;
+        position: relative;
+        transition: transform 0.5s ease;
+        animation: slide-down 1s;
+        border-radius:10px; 
+      }
+
+      .auth-container.hidden {
+        display: none;
+      }
+
+      .auth-container.active {
+        display: block;
+      }
+
+      .auth-container h2 {
+        font-size: 36px;
+        text-align: center;
+        margin: 25px 0;
+        color: #4d4d4d;
+      }
+
+      .close-button {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+      }
+
+      .close-button i {
+        color: #4d4d4d;
+        padding: 10px;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .input-group {
+        position: relative;
+        margin-bottom: 15px;
+        border-bottom: 1px solid #b3b3b3;
+      }
+
+      .input-label {
+        position: absolute;
+        transition: 0.15s all ease;
+      }
+
+      .input-label.is-focused,
+      .input-label.is-filled {
+        font-size: 10px;
+        top: -10px;
+      }
+
+      .form-input {
+        height: 25px;
+        padding: 5px;
+        position: relative;
+        z-index: 2;
+        border: none;
+        background-color: transparent;
+        width: 100%;
+      }
+
+      .form-input:focus {
+        outline: none;
+      }
+
+      .btn {
+        width: 100%;
+        height: 40px;
+        border: 1px solid #808080;
+        border-radius: 30px;
+        background-color: transparent;
+        font-size: 16px;
+        margin: 8px 0;
+        cursor: pointer;
+      }
+
+      .btn:focus {
+        outline: none;
+      }
+
+      .btn-login,
+      .btn-signup,
+      .btn-reset-password {
+        background-color: #4d4d4d;
+        color: #ffffff;
+        border: none;
+      }
+
+      .btn-login:hover,
+      .btn-signup:hover,
+      .btn-reset-password:hover {
+        background-color: #333333;
+      }
+
+      .additional-links {
+        text-align: center;
+      }
+
+      .toggle-view {
+        cursor: pointer;
+      }
+
+      /* Animation */
+      @keyframes slide-down {
+        0% {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+        100% {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </body>
+</html>

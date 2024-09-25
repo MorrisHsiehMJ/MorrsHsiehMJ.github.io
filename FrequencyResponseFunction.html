@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ITRI-機台資料庫系統</title>
+    <link rel="icon" type="image/png" href="./assets/images/ITRI_MiniLogo.png" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./style.css" />
+    <style>
+      .chart-dashboard {
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
+        margin-bottom: 20px;
+      }
+      .chart-container {
+        width: 65%;
+        padding-right: 20px;
+      }
+      .gauge-container {
+        width: 30%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-evenly;
+      }
+      .gauge-chart {
+        position: relative;
+        width: 200px;
+        height: 200px;
+      }
+      canvas {
+        max-height: 100%;
+        max-width: 100%;
+      }
+      /* table */
+      .table {
+        border-collapse: separate;
+        border-spacing: 0;
+        border-radius: 10px !important;
+        overflow: hidden;
+        border: 1px solid #dee2e6;
+      }
+
+      /* 表頭樣式 */
+      .table th {
+        background-color: #979792;
+        color: #ffffff;
+      }
+
+      .table th:first-child {
+        background-color: #ffffff;
+        color: black;
+      }
+
+      .table th,
+      .table td {
+        border: 1px solid #dee2e6;
+      }
+
+      /* 高亮背景色样式 */
+      .highlight-green {
+        background-color: #5aa5a5 !important;
+        color: white !important;
+      }
+
+      .highlight-red {
+        background-color: #f592a7 !important;
+        color: white !important;
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- Header -->
+    <div id="header"></div>
+    <!-- Main -->
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Sidebar -->
+        <div id="sidebar" class="col-sm-4 col-md-2"></div>
+        <!-- Content -->
+        <div class="col-sm-8 col-md-10">
+          <h2 class="text-center fw-normal">頻率響應函數</h2>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="MachineManagement.html">機台管理</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                頻率響應函數
+              </li>
+            </ol>
+          </nav>
+          <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+            <button class="btn btn-primary" type="button">上傳檔案</button>
+            <button class="btn btn-primary" type="button">儲存變更</button>
+          </div>
+          <nav>
+            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+              <button
+                class="nav-link active"
+                id="nav-home-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-home"
+                type="button"
+                role="tab"
+                aria-controls="nav-home"
+                aria-selected="true"
+              >
+                X軸向
+              </button>
+              <button
+                class="nav-link"
+                id="nav-profile-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-profile"
+                type="button"
+                role="tab"
+                aria-controls="nav-profile"
+                aria-selected="false"
+              >
+                Y軸向
+              </button>
+              <button
+                class="nav-link"
+                id="nav-contact-tab"
+                data-bs-toggle="tab"
+                data-bs-target="#nav-contact"
+                type="button"
+                role="tab"
+                aria-controls="nav-contact"
+                aria-selected="false"
+              >
+                Z軸向
+              </button>
+            </div>
+          </nav>
+          <div class="tab-content" id="nav-tabContent">
+            <!-- X軸向內容 -->
+            <div
+              class="tab-pane fade show active p-4 my-4"
+              id="nav-home"
+              role="tabpanel"
+              aria-labelledby="nav-home-tab"
+            >
+              <div class="chart-dashboard">
+                <!-- left -->
+                <div class="chart-container card p-4">
+                  <h3 class="text-center">頻率振幅圖</h3>
+                  <canvas id="lineChartX"></canvas>
+                </div>
+                <!-- right -->
+                <div class="gauge-container card p-4">
+                  <h3 class="text-center">最大差異</h3>
+                  <canvas id="gaugeChart1X"></canvas>
+                  <canvas id="gaugeChart2X"></canvas>
+                </div>
+              </div>
+              <div>
+                <div class="card p-4">
+                  <h3 class="text-center">前六筆頻率與振幅</h3>
+                  <div class="table-responsive">
+                    <table class="table text-center">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>第一筆</th>
+                          <th>第二筆</th>
+                          <th>第三筆</th>
+                          <th>第四筆</th>
+                          <th>第五筆</th>
+                          <th>第六筆</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="highlight-green">頻率</td>
+                          <td>14.79</td>
+                          <td>9.5</td>
+                          <td>1.3</td>
+                          <td>8.2</td>
+                          <td>2</td>
+                          <td>1.1</td>
+                        </tr>
+                        <tr>
+                          <td class="highlight-green">振幅</td>
+                          <td>4.79</td>
+                          <td>9.5</td>
+                          <td>1.3</td>
+                          <td>8.2</td>
+                          <td>2</td>
+                          <td>8.1</td>
+                        </tr>
+                        <tr>
+                          <td class="highlight-red">線差(f)</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                        </tr>
+                        <tr>
+                          <td class="highlight-red">線差(a)</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Y軸向內容 -->
+            <div
+              class="tab-pane fade p-4 my-4"
+              id="nav-profile"
+              role="tabpanel"
+              aria-labelledby="nav-profile-tab"
+            >
+              <div class="chart-dashboard">
+                <!-- left -->
+                <div class="chart-container card p-4">
+                  <h3 class="text-center">頻率振幅圖</h3>
+                  <canvas id="lineChartY"></canvas>
+                </div>
+                <!-- right -->
+                <div class="gauge-container card p-4">
+                  <h3 class="text-center">最大差異</h3>
+                  <canvas id="gaugeChart1Y"></canvas>
+                  <canvas id="gaugeChart2Y"></canvas>
+                </div>
+              </div>
+              <div>
+                <div class="card p-4">
+                  <h3 class="text-center">前六筆頻率與振幅</h3>
+                  <div class="table-responsive">
+                    <table class="table text-center">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>第一筆</th>
+                          <th>第二筆</th>
+                          <th>第三筆</th>
+                          <th>第四筆</th>
+                          <th>第五筆</th>
+                          <th>第六筆</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="highlight-green">頻率</td>
+                          <td>14.79</td>
+                          <td>9.5</td>
+                          <td>1.3</td>
+                          <td>8.2</td>
+                          <td>2</td>
+                          <td>1.1</td>
+                        </tr>
+                        <tr>
+                          <td class="highlight-green">振幅</td>
+                          <td>4.79</td>
+                          <td>9.5</td>
+                          <td>1.3</td>
+                          <td>8.2</td>
+                          <td>2</td>
+                          <td>8.1</td>
+                        </tr>
+                        <tr>
+                          <td class="highlight-red">線差(f)</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                        </tr>
+                        <tr>
+                          <td class="highlight-red">線差(a)</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Z軸向內容 -->
+            <div
+              class="tab-pane fade p-4 my-4"
+              id="nav-contact"
+              role="tabpanel"
+              aria-labelledby="nav-contact-tab"
+            >
+              <div class="chart-dashboard">
+                <!-- left -->
+                <div class="chart-container card p-4">
+                  <h3 class="text-center">頻率振幅圖</h3>
+                  <canvas id="lineChartZ"></canvas>
+                </div>
+                <!-- right -->
+                <div class="gauge-container card p-4">
+                  <h3 class="text-center">最大差異</h3>
+                  <canvas id="gaugeChart1Z"></canvas>
+                  <canvas id="gaugeChart2Z"></canvas>
+                </div>
+              </div>
+              <div>
+                <div class="card p-4">
+                  <h3 class="text-center">前六筆頻率與振幅</h3>
+                  <div class="table-responsive">
+                    <table class="table text-center">
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>第一筆</th>
+                          <th>第二筆</th>
+                          <th>第三筆</th>
+                          <th>第四筆</th>
+                          <th>第五筆</th>
+                          <th>第六筆</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="highlight-green">頻率</td>
+                          <td>14.79</td>
+                          <td>9.5</td>
+                          <td>1.3</td>
+                          <td>8.2</td>
+                          <td>2</td>
+                          <td>1.1</td>
+                        </tr>
+                        <tr>
+                          <td class="highlight-green">振幅</td>
+                          <td>4.79</td>
+                          <td>9.5</td>
+                          <td>1.3</td>
+                          <td>8.2</td>
+                          <td>2</td>
+                          <td>8.1</td>
+                        </tr>
+                        <tr>
+                          <td class="highlight-red">線差(f)</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                        </tr>
+                        <tr>
+                          <td class="highlight-red">線差(a)</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                          <td>5%</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="./script.js"></script>
+    <!-- Module Imports and Initialization -->
+    <script type="module">
+      import { loadHeader } from "/components/header.js";
+      import { loadSidebar } from "/components/sidebar.js";
+      loadHeader();
+      loadSidebar();
+    </script>
+    <script>
+      // 註冊
+      Chart.pluginService.register({
+        beforeDraw: function (chart) {
+          if (chart.config.type === "doughnut") {
+            var width = chart.chart.width,
+              height = chart.chart.height,
+              ctx = chart.chart.ctx;
+
+            ctx.restore();
+
+            // 字體大小
+            var fontSize = (height / 10).toFixed(2);
+            ctx.font = fontSize + "px sans-serif";
+            ctx.textBaseline = "middle";
+            ctx.textAlign = "center";
+
+            // 字體顏色
+            var textColor;
+            if (
+              chart.canvas.id === "gaugeChart1X" ||
+              chart.canvas.id === "gaugeChart1Y" ||
+              chart.canvas.id === "gaugeChart1Z"
+            ) {
+              textColor = "#FF6384"; // 第一個圖表
+            } else if (
+              chart.canvas.id === "gaugeChart2X" ||
+              chart.canvas.id === "gaugeChart2Y" ||
+              chart.canvas.id === "gaugeChart2Z"
+            ) {
+              textColor = "#36A2EB"; // 第二個圖表
+            }
+
+            ctx.fillStyle = textColor;
+
+            // 字體位置
+            var text = chart.config.options.plugins.title.text,
+              textX = Math.round(width / 2),
+              textY = Math.round(height / 2) + 17;
+
+            ctx.fillText(text, textX, textY);
+            ctx.save();
+          }
+        },
+      });
+
+      // 線性圖表的數據和配置
+      const lineDataX = {
+        labels: [
+          "Jan",
+          "Feb",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "Aug",
+          "Sept",
+        ],
+        datasets: [
+          {
+            label: "振幅",
+            borderColor: "rgb(75, 192, 192)",
+            backgroundColor: "rgba(75, 192, 192, 0.2)",
+            data: [45, 30, 40, 20, 35, 25, 40, 30, 35],
+            fill: true,
+            tension: 0.4,
+          },
+        ],
+      };
+
+      const lineConfigX = {
+        type: "line",
+        data: lineDataX,
+        options: {
+          responsive: true,
+          scales: {
+            x: {
+              display: true,
+              title: {
+                display: true,
+                text: "Month",
+              },
+            },
+            y: {
+              display: true,
+              title: {
+                display: true,
+                text: "Value",
+              },
+              suggestedMin: 0,
+              suggestedMax: 50,
+            },
+          },
+        },
+      };
+
+      const lineDataY = { ...lineDataX }; // Y軸向的數據
+      const lineConfigY = { ...lineConfigX, data: lineDataY }; // Y軸向圖表的配置
+
+      const lineDataZ = { ...lineDataX }; // Z軸向的數據
+      const lineConfigZ = { ...lineConfigX, data: lineDataZ }; // Y軸向圖表的配置
+
+      // 環形圖表的第一個圖表配置
+      const gaugeData1X = {
+        labels: ["頻率:正常", ""],
+        datasets: [
+          {
+            label: "My First Dataset",
+            data: [14.79, 85.21],
+            backgroundColor: ["rgb(255, 99, 132)", "rgb(233, 236, 239)"],
+            hoverOffset: 4,
+          },
+        ],
+      };
+
+      const gaugeConfig1X = {
+        type: "doughnut",
+        data: gaugeData1X,
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: "14.79%",
+            },
+          },
+          cutout: "80%",
+        },
+      };
+
+      const gaugeData1Y = { ...gaugeData1X }; // Y軸向第一個環形圖的數據
+      const gaugeConfig1Y = { ...gaugeConfig1X, data: gaugeData1Y }; // Y軸向第一個環形圖的配置
+
+      const gaugeData1Z = { ...gaugeData1X }; // Z軸向第一個環形圖的數據
+      const gaugeConfig1Z = { ...gaugeConfig1X, data: gaugeData1Z }; // Z軸向第一個環形圖的配置
+
+      // 環形圖表的第二個圖表配置
+      const gaugeData2X = {
+        labels: ["振幅:異常", ""],
+        datasets: [
+          {
+            label: "My Second Dataset",
+            data: [9.5, 90.5],
+            backgroundColor: ["rgb(75, 192, 192)", "rgb(233, 236, 239)"],
+            hoverOffset: 4,
+          },
+        ],
+      };
+
+      const gaugeConfig2X = {
+        type: "doughnut",
+        data: gaugeData2X,
+        options: {
+          responsive: true,
+          plugins: {
+            title: {
+              display: true,
+              text: "9.5%",
+            },
+          },
+          cutout: "80%",
+        },
+      };
+
+      const gaugeData2Y = { ...gaugeData2X }; // Y軸向第二個環形圖的數據
+      const gaugeConfig2Y = { ...gaugeConfig2X, data: gaugeData2Y }; // Y軸向第二個環形圖的配置
+
+      const gaugeData2Z = { ...gaugeData2X }; // Z軸向第二個環形圖的數據
+      const gaugeConfig2Z = { ...gaugeConfig2X, data: gaugeData2Z }; // Z軸向第二個環形圖的配置
+
+      // 渲染 X 軸向圖表
+      const lineChartX = new Chart(
+        document.getElementById("lineChartX"),
+        lineConfigX
+      );
+
+      const gaugeChart1X = new Chart(
+        document.getElementById("gaugeChart1X"),
+        gaugeConfig1X
+      );
+
+      const gaugeChart2X = new Chart(
+        document.getElementById("gaugeChart2X"),
+        gaugeConfig2X
+      );
+
+      // 渲染 Y 軸向圖表
+      const lineChartY = new Chart(
+        document.getElementById("lineChartY"),
+        lineConfigY
+      );
+
+      const gaugeChart1Y = new Chart(
+        document.getElementById("gaugeChart1Y"),
+        gaugeConfig1Y
+      );
+
+      const gaugeChart2Y = new Chart(
+        document.getElementById("gaugeChart2Y"),
+        gaugeConfig2Y
+      );
+
+      // 渲染 Z 軸向圖表
+      const lineChartZ = new Chart(
+        document.getElementById("lineChartZ"),
+        lineConfigZ
+      );
+
+      const gaugeChart1Z = new Chart(
+        document.getElementById("gaugeChart1Z"),
+        gaugeConfig1Z
+      );
+
+      const gaugeChart2Z = new Chart(
+        document.getElementById("gaugeChart2Z"),
+        gaugeConfig2Z
+      );
+    </script>
+  </body>
+</html>

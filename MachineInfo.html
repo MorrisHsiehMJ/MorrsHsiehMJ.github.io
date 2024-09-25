@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ITRI-機台資料庫系統</title>
+    <link rel="icon" type="image/png" href="./assets/images/ITRI_MiniLogo.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <!-- Header -->
+    <div id="header"></div>
+    <!-- Main -->
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Sidebar -->
+        <div id="sidebar" class="col-sm-4 col-md-2"></div>
+        <!-- Content -->
+        <div class="col-sm-8 col-md-10">
+          <h2 class="text-center fw-normal">基本資料</h2>
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item">
+                <a href="MachineManagement.html">機台管理</a>
+              </li>
+              <li class="breadcrumb-item active" aria-current="page">
+                基本資料
+              </li>
+            </ol>
+          </nav>
+          <form>
+            <span class="sub-title">基本資料</span>
+            <div class="p-4">
+              <div class="row mb-3">
+                <label for="inputNo1" class="col-sm-2 col-form-label"
+                  >公司</label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputNo1"
+                    value="高鋒"
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="inputNo2" class="col-sm-2 col-form-label"
+                  >資料ID</label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputNo2"
+                    value="HF-500"
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="inputNo3" class="col-sm-2 col-form-label"
+                  >機台形式</label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputNo3"
+                    value="臥式五輪"
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="inputNo4" class="col-sm-2 col-form-label"
+                  >機台型號</label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputNo4"
+                    value=""
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="inputNo5" class="col-sm-2 col-form-label"
+                  >控制器類型</label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputNo5"
+                    value="SIEMENS"
+                  />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="inputNo6" class="col-sm-2 col-form-label"
+                  >量測時間</label
+                >
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="inputNo6" />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="inputNo7" class="col-sm-2 col-form-label"
+                  >量測地點</label
+                >
+                <div class="col-sm-10">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="inputNo7"
+                    value="台中"
+                  />
+                </div>
+              </div>
+            </div>
+            <span class="sub-title">機台資料</span>
+            <div class="p-4">
+              <!-- 行程_X, 行程_Y, 行程_Z 使用同一個 Label -->
+              <div class="row mb-3">
+                <label for="inputNo8" class="col-sm-2 col-form-label"
+                  >行程</label
+                >
+                <div class="col-sm-10">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputNo8"
+                        placeholder="X"
+                        value="750"
+                      />
+                    </div>
+                    <div class="col-sm-4">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputNo9"
+                        placeholder="Y"
+                        value="850"
+                      />
+                    </div>
+                    <div class="col-sm-4">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputNo10"
+                        placeholder="Z"
+                        value="650"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- 馬達規格_X, 馬達規格_Y, 馬達規格_Z 使用同一個 Label -->
+              <div class="row mb-3">
+                <label for="inputNo11" class="col-sm-2 col-form-label"
+                  >馬達規格</label
+                >
+                <div class="col-sm-10">
+                  <div class="row">
+                    <div class="col-sm-4">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputNo11"
+                        placeholder="X"
+                      />
+                    </div>
+                    <div class="col-sm-4">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputNo12"
+                        placeholder="Y"
+                      />
+                    </div>
+                    <div class="col-sm-4">
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="inputNo13"
+                        placeholder="Z"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <span class="sub-title">圖片上傳</span>
+            <div class="p-4">
+              <div class="row mb-3">
+                <label for="formFile_1" class="col-sm-2 col-form-label"
+                  >量測點位</label
+                >
+                <div class="col-sm-10">
+                  <input class="form-control" type="file" id="formFile_1" />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="formFile_2" class="col-sm-2 col-form-label"
+                  >敲擊位置</label
+                >
+                <div class="col-sm-10">
+                  <input class="form-control" type="file" id="formFile_2" />
+                </div>
+              </div>
+              <div class="row mb-3">
+                <label for="formFile_3" class="col-sm-2 col-form-label"
+                  >機台型式</label
+                >
+                <div class="col-sm-10">
+                  <input class="form-control" type="file" id="formFile_3" />
+                </div>
+              </div>
+              <div class="row row-cols-1 row-cols-md-3 g-4">
+                <!-- 第一張 -->
+                <div class="col">
+                  <div
+                    class="card h-100 d-flex flex-column justify-content-center"
+                  >
+                    <img
+                      src="assets/images/temp1.png"
+                      class="card-img-top img-fluid"
+                      alt="量測點位"
+                    />
+                    <div
+                      class="card-body d-flex flex-column justify-content-center"
+                    >
+                      <h5 class="card-title text-center">量測點位</h5>
+                    </div>
+                  </div>
+                </div>
+                <!-- 第二張 -->
+                <div class="col">
+                  <div
+                    class="card h-100 d-flex flex-column justify-content-center"
+                  >
+                    <img
+                      src="assets/images/temp2.png"
+                      class="card-img-top img-fluid"
+                      alt="敲擊位置"
+                    />
+                    <div
+                      class="card-body d-flex flex-column justify-content-center"
+                    >
+                      <h5 class="card-title text-center">敲擊位置</h5>
+                    </div>
+                  </div>
+                </div>
+                <!-- 第三張 -->
+                <div class="col">
+                  <div
+                    class="card h-100 d-flex flex-column justify-content-center"
+                  >
+                    <img
+                      src="assets/images/temp3.png"
+                      class="card-img-top img-fluid"
+                      alt="機台型式"
+                    />
+                    <div
+                      class="card-body d-flex flex-column justify-content-center"
+                    >
+                      <h5 class="card-title text-center">機台型式</h5>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="d-flex justify-content-center my-4">
+              <a
+                class="btn btn-secondary me-md-2"
+                href="MachineManagement.html"
+                role="button"
+                >取消</a
+              >
+              <button type="submit" class="btn btn-primary">確定</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="./script.js"></script>
+    <!-- Module Imports and Initialization -->
+    <script type="module">
+      import { loadHeader } from "/components/header.js";
+      import { loadSidebar } from "/components/sidebar.js";
+      loadHeader();
+      loadSidebar();
+    </script>
+  </body>
+</html>

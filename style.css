@@ -1,0 +1,52 @@
+.web-header {
+  background-color: #3b6d99;
+}
+
+.sidebar-link {
+  font-weight: normal;
+  color: #787878;
+}
+
+i {
+  font-size: 16px;
+}
+
+.sub-title {
+  background-color: #dba405;
+  color: white;
+  font-weight: bold;
+  border-radius: 25px;
+  padding: 5px 20px 5px 20px;
+  font-size: 18px;
+  display: inline-block;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  vertical-align: middle;
+}
+
+a:hover,
+a:visited,
+a:link,
+a:active {
+  text-decoration: none;
+}
+
+.btn-primary {
+  background-color: #218eaf;
+  border-color: #218eaf;
+}
+
+.btn-primary:visited,
+.btn-primary:active,
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: #3ca597;
+  border-color: #3ca597;
+}
+
+/* .title-image {
+  width: 150px;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+} */

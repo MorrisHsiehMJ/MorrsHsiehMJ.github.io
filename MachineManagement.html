@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>ITRI-機台資料庫系統</title>
+    <link rel="icon" type="image/png" href="./assets/images/ITRI_MiniLogo.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.0/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+
+  <body>
+    <!-- Header -->
+    <div id="header"></div>
+    <!-- Main -->
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Sidebar -->
+        <div id="sidebar" class="col-sm-4 col-md-2"></div>
+        <!-- Content -->
+        <div class="col-sm-8 col-md-10">
+          <h2 class="text-center mb-4 fw-normal">機台管理</h2>
+          <form class="row g-3">
+            <div class="col-auto">
+              <input
+                type="text"
+                class="form-control"
+                id="inputKeyword"
+                placeholder="請輸入關鍵字"
+              />
+            </div>
+            <div class="col-auto">
+              <button type="submit" class="btn btn-primary mb-3">搜尋</button>
+            </div>
+            <div class="col-auto">
+              <a
+                class="btn btn btn-secondary mb-3"
+                href="MachineCreate.html"
+                role="button"
+                >新增機台</a
+              >
+            </div>
+          </form>
+
+          <div class="row">
+            <div class="table-responsive">
+              <table class="table table-striped text-center table-hover">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>廠商</th>
+                    <th>型號</th>
+                    <th>機台型式</th>
+                    <th>控制器類型</th>
+                    <th>地點</th>
+                    <th>x軸行程</th>
+                    <th>y軸行程</th>
+                    <th>z軸行程</th>
+                    <th>功能</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>1</td>
+                    <td>高鋒</td>
+                    <td>HF-500</td>
+                    <td>臥式五輪</td>
+                    <td>SIEMENS</td>
+                    <td>台中</td>
+                    <td></td>
+                    <td></td>
+                    <td>650</td>
+                    <td>
+                      <a
+                        class="btn btn-outline-secondary btn-sm me-md-2"
+                        href="MachineInfo.html"
+                        role="button"
+                        >檢視</a
+                      >
+                      <a
+                        class="btn btn-outline-secondary btn-sm"
+                        href="FrequencyResponseFunction.html"
+                        role="button"
+                        >函數</a
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>2</td>
+                    <td>高鋒</td>
+                    <td>HF-500</td>
+                    <td>臥式五輪</td>
+                    <td>SIEMENS</td>
+                    <td>台中</td>
+                    <td>750</td>
+                    <td>850</td>
+                    <td>650</td>
+                    <td>
+                      <a
+                        class="btn btn-outline-secondary btn-sm me-md-2"
+                        href="MachineInfo.html"
+                        role="button"
+                        >檢視</a
+                      >
+                      <a
+                        class="btn btn-outline-secondary btn-sm"
+                        href="FrequencyResponseFunction.html"
+                        role="button"
+                        >函數</a
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>3</td>
+                    <td>北科</td>
+                    <td>HF-500</td>
+                    <td>臥式五輪</td>
+                    <td>SIEMENS</td>
+                    <td>台中</td>
+                    <td>750</td>
+                    <td>850</td>
+                    <td>650</td>
+                    <td>
+                      <a
+                        class="btn btn-outline-secondary btn-sm me-md-2"
+                        href="MachineInfo.html"
+                        role="button"
+                        >檢視</a
+                      >
+                      <a
+                        class="btn btn-outline-secondary btn-sm"
+                        href="FrequencyResponseFunction.html"
+                        role="button"
+                        >函數</a
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>4</td>
+                    <td>高鋒</td>
+                    <td>HF-500</td>
+                    <td>臥式五輪</td>
+                    <td>SIEMENS</td>
+                    <td>台中</td>
+                    <td>750</td>
+                    <td>850</td>
+                    <td>650</td>
+                    <td>
+                      <a
+                        class="btn btn-outline-secondary btn-sm me-md-2"
+                        href="MachineInfo.html"
+                        role="button"
+                        >檢視</a
+                      >
+                      <a
+                        class="btn btn-outline-secondary btn-sm"
+                        href="FrequencyResponseFunction.html"
+                        role="button"
+                        >函數</a
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>5</td>
+                    <td>高鋒</td>
+                    <td>HF-500</td>
+                    <td>臥式五輪</td>
+                    <td>SIEMENS</td>
+                    <td>台中</td>
+                    <td>750</td>
+                    <td>850</td>
+                    <td>650</td>
+                    <td>
+                      <a
+                        class="btn btn-outline-secondary btn-sm me-md-2"
+                        href="MachineInfo.html"
+                        role="button"
+                        >檢視</a
+                      >
+                      <a
+                        class="btn btn-outline-secondary btn-sm"
+                        href="FrequencyResponseFunction.html"
+                        role="button"
+                        >函數</a
+                      >
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>6</td>
+                    <td>高鋒</td>
+                    <td>HF-500</td>
+                    <td>臥式五輪</td>
+                    <td>SIEMENS</td>
+                    <td>台中</td>
+                    <td>750</td>
+                    <td>850</td>
+                    <td>650</td>
+                    <td>
+                      <a
+                        class="btn btn-outline-secondary btn-sm me-md-2"
+                        href="MachineInfo.html"
+                        role="button"
+                        >檢視</a
+                      >
+                      <a
+                        class="btn btn-outline-secondary btn-sm"
+                        href="FrequencyResponseFunction.html"
+                        role="button"
+                        >函數</a
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="./script.js"></script>
+    <!-- Module Imports and Initialization -->
+    <script type="module">
+      import { loadHeader } from "/components/header.js";
+      import { loadSidebar } from "/components/sidebar.js";
+      loadHeader();
+      loadSidebar();
+    </script>
+  </body>
+</html>
